@@ -1,4 +1,4 @@
-
+package atm;
 import atm.ATM;
 
 // ATMCaseStudy.java
