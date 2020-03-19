@@ -58,7 +58,7 @@ public class Deposit extends Transaction {
       } 
       else 
       {
-         screen.displayMessage("Cancle Deposit" );
+         screen.displayMessage("CANCELED Deposit" );
       } 
    } 
 
