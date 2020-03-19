@@ -58,8 +58,7 @@ public class Deposit extends Transaction {
       } 
       else 
       {
-         screen.displayMessage( "\nPlease enter a deposit amount in " + 
-         "CENTS (or 0 to cancel): " );
+         screen.displayMessage("Cancle Deposit" );
       } 
    } 
 
@@ -67,7 +66,7 @@ public class Deposit extends Transaction {
    {
       Screen screen = getScreen(); 
 
-      screen.displayMessage( "\nPlease enter a deposit amount (or 0 to cancel): " );
+      screen.displayMessage( "\nPlease enter a deposit amount in CENTS (or 0 to cancel): " );
     
       int input = keypad.getInput(); 
       
