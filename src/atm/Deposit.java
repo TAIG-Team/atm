@@ -7,22 +7,75 @@ package atm;
 
 /**
  *
- * @author andreasimental
+ * @author TAIG
  */
 public class Deposit extends Transaction {
-    private int amount;
-    private Keypad keypad;
-    private DepositSlot depositSlot;
+      private double amount; 
+   private Keypad keypad; 
+   private DepositSlot depositSlot; 
+   private final static int CANCELED = 0; 
 
-    public Deposit(int currentAccountNumber, Screen screen, BankDatabase bankDatabase, Keypad keypad, DepositSlot depositSlot) {
-        
-        super(currentAccountNumber, screen, bankDatabase);
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+ 
+   public Deposit( int currentAccountNumber, Screen screen, 
+      BankDatabase bankDatabase, Keypad atmKeypad, 
+      DepositSlot atmDepositSlot )
+   {
     
+      super( currentAccountNumber, screen, bankDatabase );
+
+      keypad = atmKeypad;
+      depositSlot = atmDepositSlot;
+   } 
+   
+   public void execute()
+   {
+      BankDatabase bankDatabase = getBankDatabase();
+      Screen screen = getScreen();
+      amount = promptForDepositAmount(); 
+    
+      if ( amount != CANCELED )
+      {
+         screen.displayMessage( 
+            "\n Please insert Envelope which contains: " );
+         screen.displayDollarAmount( amount );
+         screen.displayMessageLine( "." );
+
+        
+         boolean envelopeReceived = depositSlot.isEnvelopeReceived();
+
+         if ( envelopeReceived )
+         {  
+            screen.displayMessageLine( "\nYour envelope has been " + 
+               "received." );
+            
+            bankDatabase.credit( getAccountNumber(), amount ); 
+         } 
+         else
+         {
+            screen.displayMessageLine( "\nYou did not insert an " +
+               "envelope." );
+         } 
+      } 
+      else 
+      {
+         screen.displayMessage( "\nPlease enter a deposit amount in " + 
+         "CENTS (or 0 to cancel): " );
+      } 
+   } 
+
+   private double promptForDepositAmount()
+   {
+      Screen screen = getScreen(); 
+
+      screen.displayMessage( "\nPlease enter a deposit amount (or 0 to cancel): " );
+    
+      int input = keypad.getInput(); 
+      
+      if ( input == CANCELED ) 
+         return CANCELED;
+      else
+      {
+         return ( double ) input/100;
+      } 
+   } 
 }
