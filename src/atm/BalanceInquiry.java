@@ -7,19 +7,32 @@ package atm;
 
 /**
  *
- * @author andreasimental
+ * @author TAIG
  */
 public class BalanceInquiry extends Transaction{
+   public BalanceInquiry( int currentAccountNumber, Screen screen, 
+      BankDatabase bankDatabase )
+   {
+      super( currentAccountNumber, screen, bankDatabase );
+   } 
+   public void execute()
+   {
 
-    public BalanceInquiry(int currentAccountNumber, Screen screen, BankDatabase bankDatabase) {
-        super(currentAccountNumber, screen, bankDatabase);
-        
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
+      BankDatabase bankDatabase = getBankDatabase();
+      Screen screen = getScreen();
 
-    @Override
-    public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-}
+      double availableBalance = 
+         bankDatabase.getAvailableBalance( getAccountNumber() );
+
+      double total = 
+         bankDatabase.getTotalBalance( getAccountNumber() );
+
+      screen.displayMessageLine( "\nBalance Information:" );
+      screen.displayMessage( " - Available balance: " ); 
+      screen.displayDollarAmount( availableBalance );
+      screen.displayMessage( "\n - Total balance:     " );
+      screen.displayDollarAmount( total );
+      screen.displayMessageLine( "" );
+   } 
+} 
+
