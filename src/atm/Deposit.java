@@ -74,7 +74,7 @@ public class Deposit extends Transaction {
          return CANCELED;
       else
       {
-         return ( double ) input/100;
+         return ( double ) Math.abs(input)/100;
       } 
    } 
 }
